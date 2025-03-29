@@ -9,18 +9,15 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
+
 
 class TestSmote():
   def setup_method(self, method):
     options = Options()
-    options.add_argument("--headless")  # Necessário no Docker
-    options.binary_location = "/usr/bin/firefox" 
-
-    service = Service("/usr/local/bin/geckodriver")  # Caminho do driver no container
-
-    self.driver = webdriver.Firefox(service=service, options=options)
+    options.add_argument("--headless=new")
+    self.driver = webdriver.Chrome(options=options)
+    self.vars = {}
   
   def teardown_method(self, method):
     self.driver.quit()
